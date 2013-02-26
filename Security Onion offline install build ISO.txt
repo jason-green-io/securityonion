@@ -1,0 +1,98 @@
+/*
+download latest 12.04 iso
+install ubuntu server, MAKE SURE YOU'RE NOT CONNECTED TO THE NET, don't update
+take a snapshot!!
+*/
+
+sudo -s
+
+apt-get update
+apt-get install python-software-properties mkisofs
+
+add-apt-repository ppa:securityonion/stable
+
+echo 'deb*http://linux.dell.com/repo/community/deb/latest/' | sudo tee
+-a /etc/apt/sources.list.d/linux.dell.com.sources.list
+
+gpg --keyserver pool.sks-keyservers.net --recv-key 1285491434D8786F
+
+gpg -a --export 1285491434D8786F | sudo apt-key add -
+
+apt-get update
+apt-get -d dist-upgrade
+apt-get -d install securityonion-all
+apt-get -d install xorg
+apt-get -d install fluxbox
+apt-get -d install srvadmin-all
+
+mkdir /isobuild
+mkdir /iso
+
+/*
+copy the iso to /root
+*/
+
+mount -o loop ~/ubuntu-12.04.1-server-amd64.iso /iso
+
+rsync -aP /iso/ /isobuild
+
+mkdir -p /isobuild/dists/stable/extras/binary-i386 /isobuild/pool/extras
+
+rsync -aP /var/cache/apt/archives/ /isobuild/pool/extras
+
+cd /isobuild
+
+apt-ftparchive packages ./pool/extras/ > ./dists/stable/extras/binary-i386/Packages
+
+/*
+add to the end of /isobuild/isolinux/isolinux.cfg
+###################
+LABEL securityonion
+        menu label ^Security Onion install
+        kernel /install/vmlinuz
+        append preseed/file=/cdrom/preseed/so.seed initrd=/install/initrd.gz locale=en_US console-setup/ask_detect=false keyboard-configuration/layoutcode=us ramdisk_size=16384 root=/dev/ram rw quiet --
+###################
+*/
+
+/*
+/isobuild/preseed/so.seed
+##############
+d-i     debian-installer/locale 			string		en_US
+d-i     console-setup/ask_detect        		boolean		false
+d-i     keyboard-configuration/layoutcode       	string		us
+d-i     base-installer/kernel/override-image    	string		linux-server
+d-i     time/zone					string		UTC
+d-i     clock-setup/utc					boolean		true
+d-i     passwd/user-fullname    			string		Security Onion
+d-i     passwd/username 				string		so
+# create a hashed password for the next line: openssl passwd -1 password
+d-i     passwd/user-password-crypted    		password	<insert hashed password here>
+d-i     user-setup/encrypt-home 			boolean		false
+debconf debconf/frontend        			select		noninteractive
+d-i     pkgsel/update-policy    			select		none
+d-i     clock-setup/ntp 				boolean		false
+d-i     mirror/http/proxy       			string
+d-i 	apt-setup/use_mirror 				boolean		false
+d-i 	apt-setup/security_host 			string
+tasksel tasksel/first   				multiselect     standard, server
+d-i 	pkgsel/include 					string		apparmor openssh-server xorg fluxbox srvadmin-all
+d-i     pkgsel/install-language-support 		boolean		false
+d-i     grub-installer/only_debian 			boolean		true
+d-i     cdrom-detect/eject      			boolean		false
+d-i     finish-install/reboot_in_progress       	note
+##############
+*/
+
+cd ~
+
+mkisofs -r -V "Security Onion Install CD" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinuix/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o SecurityOnionCustom.iso /isobuild
+
+/*
+take a snap shot at this point
+
+apt-get update
+apt-get -d dist-upgrade
+apt-get autoremove
+
+copy packages and rebuild
+*/
