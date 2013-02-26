@@ -2,4 +2,4 @@ This documents, in a very basic way, how to create a custom install of Security 
 
 so.seed needs to go into /isobuld/preseed
 
-addto... needs to be added to the end of ...
+addtoisolinux.cfg needs to be added to the end of isolinux.cfg
