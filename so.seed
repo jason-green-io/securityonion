@@ -1,0 +1,24 @@
+d-i     debian-installer/locale 			string		en_US
+d-i     console-setup/ask_detect        		boolean		false
+d-i     keyboard-configuration/layoutcode       	string		us
+d-i     base-installer/kernel/override-image    	string		linux-server
+d-i     time/zone					string		UTC
+d-i     clock-setup/utc					boolean		true
+d-i     passwd/user-fullname    			string		Security Onion
+d-i     passwd/username 				string		so
+# create a hashed password for the next line: openssl passwd -1 password
+d-i     passwd/user-password-crypted    		password	<insert hashed password here>
+d-i     user-setup/encrypt-home 			boolean		false
+debconf debconf/frontend        			select		noninteractive
+d-i     pkgsel/update-policy    			select		none
+d-i     clock-setup/ntp 				boolean		false
+d-i     mirror/http/proxy       			string
+d-i 	apt-setup/use_mirror 				boolean		false
+d-i 	apt-setup/security_host 			string
+tasksel tasksel/first   				multiselect     standard, server
+d-i 	pkgsel/include 					string		apparmor openssh-server xorg fluxbox srvadmin-all
+d-i     pkgsel/install-language-support 		boolean		false
+d-i     grub-installer/only_debian 			boolean		true
+d-i     cdrom-detect/eject      			boolean		false
+d-i     finish-install/reboot_in_progress       	note
+
