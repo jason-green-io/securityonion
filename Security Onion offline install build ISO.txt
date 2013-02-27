@@ -1,7 +1,7 @@
 /*
 download latest 12.04 iso
-install ubuntu server, MAKE SURE YOU'RE NOT CONNECTED TO THE NET, don't update
-take a snapshot!!
+install ubuntu server in a vm preferrably, MAKE SURE YOU'RE NOT CONNECTED TO THE NET, don't update
+take a snapshot
 */
 
 sudo -s
@@ -29,7 +29,7 @@ mkdir /isobuild
 mkdir /iso
 
 /*
-copy the iso to /root
+copy the iso to ~
 */
 
 mount -o loop ~/ubuntu-12.04.1-server-amd64.iso /iso
@@ -38,24 +38,26 @@ rsync -aP /iso/ /isobuild
 
 mkdir -p /isobuild/dists/stable/extras/binary-i386 /isobuild/pool/extras
 
-rsync -aP /var/cache/apt/archives/ /isobuild/pool/extras
+rsync -aP --delete /var/cache/apt/archives/ /isobuild/pool/extras
 
 cd /isobuild
 
 apt-ftparchive packages ./pool/extras/ > ./dists/stable/extras/binary-i386/Packages
-
-
 
 cd ~
 
 mkisofs -r -V "Security Onion Install CD" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinuix/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o SecurityOnionCustom.iso /isobuild
 
 /*
+###this part needs more testing###
 take a snap shot at this point
+when you need to update the iso do this:
 
 apt-get update
 apt-get -d dist-upgrade
 apt-get autoremove
 
-copy packages and rebuild
+then start the process of rebuilding the ISO with the:
+
+rsync -aP --delete /var/cache/apt/archives/ /isobuild/pool/extras
 */
