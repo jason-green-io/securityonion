@@ -5,4 +5,4 @@ sosetup at the console or using an iDRAC remotely.
 
 so.seed needs to go into /isobuild/preseed
 
-addtoisolinux.cfg needs to be added to the end of isolinux.cfg
+txt.cfg needs to replace the one in /isobuild/isolinux
