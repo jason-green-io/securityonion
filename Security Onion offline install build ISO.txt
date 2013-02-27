@@ -57,7 +57,6 @@ apt-get update
 apt-get -d dist-upgrade
 apt-get autoremove
 
-then start the process of rebuilding the ISO with the:
+then start the process of rebuilding the ISO at line 41
 
-rsync -aP --delete /var/cache/apt/archives/ /isobuild/pool/extras
 */
