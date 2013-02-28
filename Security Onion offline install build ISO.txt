@@ -11,7 +11,7 @@ apt-get install python-software-properties mkisofs
 
 add-apt-repository ppa:securityonion/stable
 
-echo 'deb*http://linux.dell.com/repo/community/deb/latest/' | sudo tee -a /etc/apt/sources.list.d/linux.dell.com.sources.list
+echo 'deb http://linux.dell.com/repo/community/deb/latest /' | sudo tee -a /etc/apt/sources.list.d/linux.dell.com.sources.list
 
 gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-key 1285491434D8786F
 
