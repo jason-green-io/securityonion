@@ -1,0 +1,14 @@
+TODO:
+
+
+
+write a script (maybe called geo-update) that:
+
+links snorby geoip to elsa geoip
+updates elsa files from /tmp
+updates squert files from /tmp
+
+so you'd copy the files (geoIP, ip2 AND the rules) from a net connected server in /tmp of an unconnected server and every day the offline server would check and update itself, then, like cron.d/rule-update, geo-update would check if it's a sensor or server and copy the files from the server if a sensor .. a slight modification ro rule-update is also necessary
+
+
+
