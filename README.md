@@ -1,4 +1,5 @@
 Security Onion offline install build ISO.txt:
+---------------------------------------------
 
 This is my version of how to create a custom install of Security Onion 
 using Ubuntu seed files and the Ubuntu server ISO. It was built with Dell R710/R610 in mind
@@ -10,6 +11,7 @@ so.seed needs to go into /isobuild/preseed
 txt.cfg needs to replace the one in /isobuild/isolinux
 
 geo-update:
+-----------
 
 This will update an offline server's GeoIP for ELSA + Snorby and ip2c for squert. Just put the files in /tmp and run
 
