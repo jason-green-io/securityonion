@@ -1,0 +1,59 @@
+#!/bin/bash
+
+#trick squert
+for SITE in ftp.ripe.net ftp.afrinic.net ftp.apnic.net ftp.arin.net ftp.lacnic.net
+do
+	if [[ -z $(grep $SITE /etc/hosts) ]]
+	then
+        	echo "127.0.0.1 $SITE" >> /etc/hosts
+	else
+		echo "$SITE already in /etc/hosts"
+	fi
+done
+
+#link snorby to shared geoip
+if [[ ! -h /opt/snorby/config/snorby-geoip.dat || ! -e /opt/snorby/config/snorby-geoip.dat ]]
+then
+    mv /opt/snorby/config/snorby-geoip.dat /opt/snorby/config/snorby-geoip.dat.old
+    ln -s /usr/local/share/GeoIP/GeoIP.dat /opt/snorby/config/snorby-geoip.dat
+else
+	echo "Snorby already linked to /usr/local/share/GeoIP"
+fi
+
+cd /tmp
+
+#update geoip from /tmp
+if [[ -e GeoIP.dat.gz && -e GeoLiteCity.dat.gz ]]
+then
+	echo "Updating GeoIP"
+	mkdir -p /usr/local/share/GeoIP
+
+	gunzip GeoIP.dat.gz GeoLiteCity.dat.gz
+	cp GeoIP.dat /usr/local/share/GeoIP
+	cp GeoLiteCity.dat /usr/local/share/GeoIP/GeoIPCity.dat
+else
+	echo "No GeoIP update found"
+fi
+
+#update squert files from /tmp
+if [[ -n $(ls delegated*latest*) ]]
+then
+	echo "Updating ip2c"
+	mkdir -p /srv/ftp/pub/stats/afrinic/ /srv/ftp/pub/stats/apnic/ /srv/ftp/pub/stats/arin/ /srv/ftp/pub/stats/lacnic/ /srv/ftp/ripe/stats/
+
+	cp delegated-afrinic-latest* /srv/ftp/pub/stats/afrinic/
+	cp delegated-apnic-latest* /srv/ftp/pub/stats/apnic/
+	cp delegated-arin-latest* /srv/ftp/pub/stats/arin/
+	cp delegated-lacnic-latest* /srv/ftp/pub/stats/lacnic/
+	cp delegated-ripencc-latest* /srv/ftp/ripe/stats/
+	
+	cd /var/www/squert/.scripts/Ip2c
+	
+	service vsftpd start	
+	
+	./ip2c.tcl
+	
+	service vsftpd stop
+else
+	echo "No ip2c update found"
+fi
