@@ -1,0 +1,24 @@
+#!/bin/bash
+mkdir geo-get.tmp
+cd geo-get.tmp
+
+curl -O ftp://ftp.afrinic.net/pub/stats/afrinic/delegated-afrinic-latest
+curl -O ftp://ftp.apnic.net/pub/stats/apnic/delegated-apnic-latest
+curl -O ftp://ftp.arin.net/pub/stats/arin/delegated-arin-latest
+curl -O ftp://ftp.lacnic.net/pub/stats/lacnic/delegated-lacnic-latest
+curl -O ftp://ftp.ripe.net/ripe/stats/delegated-ripencc-latest
+curl -O ftp://ftp.afrinic.net/pub/stats/afrinic/delegated-afrinic-latest.md5
+curl -O ftp://ftp.apnic.net/pub/stats/apnic/delegated-apnic-latest.md5
+curl -O ftp://ftp.arin.net/pub/stats/arin/delegated-arin-latest.md5
+curl -O ftp://ftp.lacnic.net/pub/stats/lacnic/delegated-lacnic-latest.md5
+curl -O ftp://ftp.ripe.net/ripe/stats/delegated-ripencc-latest.md5
+curl -O http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
+curl -O http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+
+tar zcvf ../geo-update.tar.gz *
+
+rm delegated* Geo*
+
+cd ..
+
+rmdir geo-get.tmp
