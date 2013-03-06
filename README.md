@@ -13,7 +13,8 @@ sosetup at the console or using an iDRAC remotely.
 geo-update:
 -----------
 
-This will update an offline server's GeoIP for ELSA + Snorby and ip2c for squert. Just put the files in /tmp and run
+This resides on the server and will will update an offline server's GeoIP for ELSA + Snorby and ip2c for squert.
+Just put the geo-update.tar.gz files created gy geo-get in /tmp and run
 
 ** if you're running an offline server, you'll also want to change the pulledpork line in /usr/bin/rule-update:
 
@@ -21,5 +22,11 @@ from: /usr/bin/pulledpork.pl -c
 
 to:   /usr/bin/pulledpork.pl -n -c
 
-This will only look in /tmp for the rule sets and not try to download them.
+This will make pulledpork.pl only look in /tmp for the rule sets and not try to download them.
+Just drop emerging.rules.tar.gz or whatever in /tmp and run rule-update
+
+geo-get
+-------
+
+This resideds on a workstation with internet access and will get the required files for geo-update.
 
