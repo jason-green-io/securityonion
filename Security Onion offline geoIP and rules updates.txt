@@ -34,4 +34,7 @@ mv delegated-ripencc-latest* /srv/ftp/ripe/stats/
 127.0.0.1 ftp.lacnic.net
 127.0.0.1 ftp.ripe.net
 
+Ideas:
 
+create a replacement /usr/bin/rule-update script on the server
+have geo-update check to see if OFFLINE=YES, and if it's a server then run
