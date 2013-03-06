@@ -38,6 +38,8 @@ fi
 
 cd /tmp
 
+tar zxvf geo-update.tar.gz
+
 #update geoip from /tmp
 if [[ -e GeoIP.dat.gz && -e GeoLiteCity.dat.gz ]]
 then
