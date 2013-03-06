@@ -1,5 +1,21 @@
 #!/bin/bash
 
+# this script assumes you have vsftpd installed with defaults
+# copy these files to /tmp:
+# GeoIP.dat.gz
+# GeoLiteCity.dat.gz
+# delegated-afrinic-latest
+# delegated-afrinic-latest.md5
+# delegated-apnic-latest
+# delegated-apnic-latest.md5
+# delegated-arin-latest
+# delegated-arin-latest.md5
+# delegated-lacnic-latest
+# delegated-lacnic-latest.md5
+# delegated-ripencc-latest
+# delegated-ripencc-latest.md5
+
+
 #trick squert
 for SITE in ftp.ripe.net ftp.afrinic.net ftp.apnic.net ftp.arin.net ftp.lacnic.net
 do
