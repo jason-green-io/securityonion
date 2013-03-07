@@ -1,8 +1,7 @@
-/*
-download latest 12.04 iso
-install ubuntu server in a vm preferrably, MAKE SURE YOU'RE NOT CONNECTED TO THE NET, don't update
-take a snapshot
-*/
+# download latest 12.04 iso
+# install ubuntu server in a vm preferrably, MAKE SURE YOU'RE NOT CONNECTED TO THE NET, don't update
+# take a snapshot
+# now it's safe to connect to the net
 
 sudo -s
 
@@ -11,51 +10,67 @@ apt-get install python-software-properties mkisofs
 
 add-apt-repository ppa:securityonion/stable
 
+# next 3 lines are for Dell servers
+
 echo 'deb http://linux.dell.com/repo/community/deb/latest /' | sudo tee -a /etc/apt/sources.list.d/linux.dell.com.sources.list
-
 gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-key 1285491434D8786F
-
 gpg -a --export 1285491434D8786F | sudo apt-key add -
 
 apt-get update
+
+# only download, don't install
+
 apt-get -d dist-upgrade
 apt-get -d install securityonion-all
 apt-get -d install xorg
 apt-get -d install fluxbox
 apt-get -d install srvadmin-all
 
+# create the folders for the ISO
+
 mkdir /isobuild
 mkdir /iso
 
-/*
-copy the iso to ~
-*/
+# copy the iso to ~ using ssh or ftp or shared folders .. you pick
+
+# mount the iso file as a loopback
 
 mount -o loop ~/ubuntu-12.04.1-server-amd64.iso /iso
 
+# make a copy of the files on the ISO that we're going to customize
+
 rsync -aP /iso/ /isobuild
 
+# create folders for our custom packages and repo
+
 mkdir -p /isobuild/dists/stable/extras/binary-i386 /isobuild/pool/extras
+
+# copy the downloaded only packages to our new custom folder
 
 rsync -aP --delete /var/cache/apt/archives/ /isobuild/pool/extras
 
 cd /isobuild
 
+# create the package index
+
 apt-ftparchive packages ./pool/extras/ > ./dists/stable/extras/binary-i386/Packages
 
 cd ~
 
+# build the ISO
+
 mkisofs -r -V "Security Onion Install CD" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinuix/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o SecurityOnionCustom.iso /isobuild
 
-/*
+# DONE!
+
+
 ###this part needs more testing###
-take a snap shot at this point
-when you need to update the iso do this:
+# take a snapshot at this point
+# when you need to update the iso do this:
 
 apt-get update
 apt-get -d dist-upgrade
 apt-get autoremove
 
-then start the process of rebuilding the ISO at line 41
+# then start the process at copying the downloaded only packages to the ISO
 
-*/
