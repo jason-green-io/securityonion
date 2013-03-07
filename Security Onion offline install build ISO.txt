@@ -1,5 +1,5 @@
 # download latest 12.04 iso
-# install ubuntu server in a vm preferrably, MAKE SURE YOU'RE NOT CONNECTED TO THE NET, don't update
+# install ubuntu server in a vm preferrably --> MAKE SURE YOU'RE NOT CONNECTED TO THE NET, don't update
 # take a snapshot
 # now it's safe to connect to the net
 
@@ -45,7 +45,7 @@ rsync -aP /iso/ /isobuild
 
 mkdir -p /isobuild/dists/stable/extras/binary-i386 /isobuild/pool/extras
 
-# copy the downloaded only packages to our new custom folder
+#HERE# copy the downloaded only packages to our new custom folder
 
 rsync -aP --delete /var/cache/apt/archives/ /isobuild/pool/extras
 
@@ -70,7 +70,7 @@ mkisofs -r -V "Security Onion Install CD" -cache-inodes -J -l -b isolinux/isolin
 
 apt-get update
 apt-get -d dist-upgrade
-apt-get autoclean
+# apt-get autoclean
 
-# then start the process at copying the downloaded only packages to the ISO
+# then start the process at copying the downloaded only packages to the ISO look for #HERE# .. up there
 
