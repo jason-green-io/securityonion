@@ -70,7 +70,7 @@ mkisofs -r -V "Security Onion Install CD" -cache-inodes -J -l -b isolinux/isolin
 
 apt-get update
 apt-get -d dist-upgrade
-apt-get autoremove
+apt-get autoclean
 
 # then start the process at copying the downloaded only packages to the ISO
 
