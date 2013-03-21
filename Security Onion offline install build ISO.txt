@@ -59,7 +59,7 @@ cd ~
 
 # build the ISO
 
-mkisofs -r -V "Security Onion Install CD" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinuix/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o SecurityOnionCustom.iso /isobuild
+mkisofs -r -V "Security Onion Install CD" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o SecurityOnionCustom.iso /isobuild
 
 # DONE!
 
