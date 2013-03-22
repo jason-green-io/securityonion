@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for i in $(cat ips)
+do
+ufw allow from $i to any port 514
+ufw allow proto udp from $i to any port 1514
+ufw allow proto tcp from $i to any port 22,3389,3154,7736,7734,444,443
+done
