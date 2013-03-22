@@ -1,4 +1,5 @@
 #!/bin/bash
+# create a file called ips with the list of IPs you'd like to give permissions to
 
 for i in $(cat ips)
 do
