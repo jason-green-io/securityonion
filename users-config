@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for i in $(cat users)
+do
+        nsm_server_user-add --user-name=$i --user-pass=Welcome1
+done
