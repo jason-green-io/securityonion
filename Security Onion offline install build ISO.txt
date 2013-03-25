@@ -74,4 +74,9 @@ apt-get -d install securityonion-all xorg fluxbox srvadmin-all
 apt-get autoclean
 
 # then start the process at copying the downloaded only packages to the ISO look for #HERE# .. up there
+# to update a current system using an updated ISO, run 
+
+apt-cdrom add
+apt-get update
+apt-get dist-upgrade
 
