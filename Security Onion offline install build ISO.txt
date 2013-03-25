@@ -70,7 +70,8 @@ mkisofs -r -V "Security Onion Install CD" -cache-inodes -J -l -b isolinux/isolin
 
 apt-get update
 apt-get -d dist-upgrade
-# apt-get autoclean
+apt-get -d install securityonion-all xorg fluxbox srvadmin-all
+apt-get autoclean
 
 # then start the process at copying the downloaded only packages to the ISO look for #HERE# .. up there
 
