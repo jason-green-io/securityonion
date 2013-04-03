@@ -1,9 +1,20 @@
 #!/bin/bash
 # create a file called ips with the list of IPs you'd like to give permissions to
 
+# 514 syslog data
+# 1514 OSSEC
+# 22 ssh
+# 3154 ELSA web
+# 7736, 7734 sguil
+# 444 snorby web
+# 443 squert and main page
+
+ufw reset
+ufw enable
+
 for i in $(cat ips)
 do
-ufw allow from $i to any port 514
-ufw allow proto udp from $i to any port 1514
-ufw allow proto tcp from $i to any port 22,3389,3154,7736,7734,444,443
+  ufw allow from $i to any port 514
+  ufw allow proto udp from $i to any port 1514
+  ufw allow proto tcp from $i to any port 22,3154,7736,7734,444,443
 done
