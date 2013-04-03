@@ -30,3 +30,13 @@ geo-get
 
 This resideds on a workstation with internet access and will get the required files for geo-update.
 
+firewall-config
+---------------
+
+quick way to setup the firewall with a txt list of IPs
+
+
+users-config
+------------
+
+quick way to create sguil users for a txt list of usernames (it would be nice if the nsm scripts would also allow password change and user deletions)
